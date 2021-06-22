@@ -19,9 +19,13 @@ module Mutations
 
     def resolve(user_id:, type:, description:, location:, name:, max_attendees: nil, happens_on:, starts_at:, ends_at:)
 
-      #Extra layer to avoid 500 on bad event_type
-      raise GraphQL::ExecutionError, "#{type} is not supported" unless %w(OfficeHour Workshop).include?(type)
+      # Extra layer to avoid 500 on bad event_type
+      unless %w[OfficeHour Workshop].include?(type)
+        raise GraphQL::ExecutionError,
+              "#{type} is not supported"
+      end
 
+      # User doesn't exist
       user = User.where(id: user_id).first
       if user.nil?
         raise GraphQL::ExecutionError,
@@ -41,7 +45,7 @@ module Mutations
       )
 
       if event.save
-        { event: event, errors: []}
+        { event: event, errors: [] }
       else
         { errors: event.errors.full_messages }
       end

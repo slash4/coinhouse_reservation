@@ -10,7 +10,8 @@ module Types
     field :events,
           [Types::EventType],
           null: false,
-          description: "Returns a list of events"
+          description: "Returns a list of events",
+          resolver: Resolvers::EventsSearch
 
     def events
       #avoid N+1 queries on users
