@@ -19,7 +19,10 @@ module Mutations
 
     def resolve(user_id:, type:, description:, location:, name:, max_attendees: nil, happens_on:, starts_at:, ends_at:)
 
-      user = User.find(user_id)
+      #Extra layer to avoid 500 on bad event_type
+      raise GraphQL::ExecutionError, "#{type} is not supported" unless %w(OfficeHour Workshop).include?(type)
+
+      user = User.where(id: user_id).first
       if user.nil?
         raise GraphQL::ExecutionError,
               "You need to select an actual user"
