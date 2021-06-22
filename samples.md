@@ -37,3 +37,18 @@ Search for events:
 {events(filter: {dateEquals: 1624379395}) {
   name
 }}
+
+
+Log in user : 
+mutation signIn {
+  signIn(email: "coinhouse-darline1@coinhouse.fr",password: "password"){
+    user{
+      name
+      email
+      
+    }
+    token
+    errors
+  }
+  
+}

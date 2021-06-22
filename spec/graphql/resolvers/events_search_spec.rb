@@ -16,7 +16,7 @@ RSpec.describe Resolvers::EventsSearch do
     end
 
     subject(:result) do
-      CoinhouseReservationSchema.execute(query).as_json
+      CoinhouseReservationSchema.execute(query, context: {current_user: User.first}).as_json
     end
 
     it "returns matching items" do

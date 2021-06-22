@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :user do
     # Use sequence to make sure that the value is unique
     sequence(:email) { |n| "coinhouse-#{Faker::Internet.user_name}#{n}@coinhouse.fr" }
+    password {'password'}
     name { Faker::Name.first_name }
   end
 

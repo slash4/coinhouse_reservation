@@ -15,7 +15,7 @@ module Mutations
     argument :ends_at, Integer, required: true
 
     field :event, Types::EventType, null: true
-    field :errors, [String], null: false
+    field :errors, [String], null: true
 
     def resolve(user_id:, type:, description:, location:, name:, max_attendees: nil, happens_on:, starts_at:, ends_at:)
 
@@ -23,6 +23,12 @@ module Mutations
       unless %w[OfficeHour Workshop].include?(type)
         raise GraphQL::ExecutionError,
               "#{type} is not supported"
+      end
+
+      # Request isn't authenticated
+      if context[:current_user].nil?
+        raise GraphQL::ExecutionError,
+              "You need to be registered to do that"
       end
 
       # User doesn't exist
@@ -45,7 +51,7 @@ module Mutations
       )
 
       if event.save
-        { event: event, errors: [] }
+        { event: event }
       else
         { errors: event.errors.full_messages }
       end
