@@ -47,3 +47,4 @@ gem 'graphiql-rails', group: :development
 #Testing made easier
 gem "rspec-rails", "= 4.0.0.beta2", :groups => [:development, :test]
 gem "factory_bot_rails", "~> 5.0", :groups => [:development, :test]
+gem 'faker'
