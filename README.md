@@ -14,6 +14,7 @@ docker-compose run --rm web rails db:seed
 web server (access it on localhost:3000) : `docker-compose up web`
 worker (process async tasks via redis & sidekiq) : `docker-compose up worker`
 postgres web admin (access it on localhost:8080) : `docker-compose up adminer`
+graphiql (started with web server. Access it on localhost:3000/graphiql)
 
 To start every service available : `docker-compose up`
 
