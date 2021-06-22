@@ -1,0 +1,44 @@
+version: '3.2'
+services:
+  db:
+    image: postgres:13.3
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: TheAnswerIs42
+      POSTGRES_USER: coinhouse_reservation
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - "db"
+  redis:
+    image: eqalpha/keydb
+    restart: always
+    ports:
+      - "6379:6379"
+  cache:
+    image: memcached
+  web:
+    build: .
+    command: 'rails s -b 0.0.0.0 -p 3000'
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+      - "redis"
+      - "adminer"
+      # - cache # Uncomment and set `config.action_controller.perform_caching` to true to test cache
+  worker:
+    build: .
+    command: bundle exec sidekiq -c 8 -q default
+    volumes:
+      - .:/myapp
+    depends_on:
+      - db
+      - redis
+      - cache
