@@ -13,7 +13,8 @@ module Types
           description: "Returns a list of events"
 
     def events
-      Event.all
+      #avoid N+1 queries on users
+      Event.preload(:user).all
     end
   end
 end
