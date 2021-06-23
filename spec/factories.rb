@@ -22,4 +22,9 @@ FactoryBot.define do
 
   factory :office_hour, parent: :event, class: 'OfficeHour' do
   end
+
+  factory :attendee do
+    user
+    event { FactoryBot.create :workshop}
+  end
 end
