@@ -27,5 +27,6 @@ To start every service available : `docker-compose up`
 
 * GraphQL samples
 You can find some working samples for GraphQL queries in samples.md
+For authenticated queries, you should use Postman with an Authorization header. A valid token is given by using SignInMutation.
 
 
