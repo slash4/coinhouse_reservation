@@ -10,6 +10,7 @@ module Types
     field :location, String, null: true
     field :description, String, null: true
     field :max_attendees, Integer, null: true
+    field :remaining_seats, Integer, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
