@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :user
-  has_many :attendees
+  has_many :attendees, dependent: :destroy
 
   validate :check_dates_and_hours
 
